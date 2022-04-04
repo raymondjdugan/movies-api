@@ -1,0 +1,7 @@
+.idea/*
+*.iml
+
+# Compiled output
+*.class
+target/*
+log\*
