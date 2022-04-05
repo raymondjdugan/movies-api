@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -49,45 +48,79 @@ public class MovieServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
 
-        Movie[] newMovies = new Gson().fromJson(request.getReader(), Movie[].class);
-        for (Movie movie : newMovies) {
-            movie.setId(movieId++);
-            movies.add(movie);
-        }
-
         try {
+            Movie[] newMovies = new Gson().fromJson(request.getReader(), Movie[].class);
+            for (Movie movie : newMovies) {
+                movie.setId(movieId++);
+                movies.add(movie);
+            }
             PrintWriter out = response.getWriter();
             out.println("Added Movies");
         } catch (IOException e) {
-            System.out.println(e);
         }
     }
 
     @Override
-    protected void doPut (HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
-        BufferedReader br = request.getReader();
-        Movie editedMovie = new Gson().fromJson(br, Movie.class);
+        Movie editedMovie = new Gson().fromJson(request.getReader(), Movie.class);
         try {
             PrintWriter out = response.getWriter();
-            String [] uriParts = request.getRequestURI().split("/");
+            String[] uriParts = request.getRequestURI().split("/");
             int targetId = Integer.parseInt(uriParts[uriParts.length - 1]);
-            for(Movie movie : movies) {
-                if (targetId == movie.getId()){
-                    movies.set(movies.indexOf(movie),editedMovie);
+            for (Movie movie : movies) {
+                if (targetId == movie.getId()) {
+                    if (editedMovie.getTitle() != null) {
+                        movie.setTitle(editedMovie.getTitle());
+                    }
+                    if (editedMovie.getPlot() != null) {
+                        movie.setPlot(editedMovie.getPlot());
+                    }
+                    if (editedMovie.getRating() != null) {
+                        movie.setRating(editedMovie.getRating());
+                    }
+                    if (editedMovie.getPoster() != null) {
+                        movie.setPoster(editedMovie.getPoster());
+                    }
+                    if (editedMovie.getYearMade() != 0) {
+                        movie.setYearMade(editedMovie.getYearMade());
+                    }
+                    if (editedMovie.getGenre() != null) {
+                        movie.setGenre(editedMovie.getGenre());
+                    }
+                    if (editedMovie.getDirector() != null) {
+                        movie.setDirector(editedMovie.getDirector());
+                    }
+                    if (editedMovie.getActors() != null) {
+                        movie.setActors(editedMovie.getActors());
+                    }
+                    if (editedMovie.getDateReleased() != null) {
+                        movie.setDateReleased(editedMovie.getDateReleased());
+                    }
+                    if (editedMovie.getImdb() > 0) {
+                        movie.setImdb(editedMovie.getImdb());
+                    }
+                    if (editedMovie.getRuntime() > 0) {
+                        movie.setRuntime(editedMovie.getRuntime());
+                    }
                 }
             }
             out.println("Movie edited");
-        } catch (IOException ex){
-            ex.printStackTrace();
+        } catch (IOException e) {
         }
     }
 
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) {
+        response.setContentType("application/json");
+        int targetId = 0;
         try {
-            String[] uriParts = request.getRequestURI().split("/");
-            int targetId = Integer.parseInt(uriParts[uriParts.length - 1]);
-            movies.removeIf(movie -> movie.getId() == targetId);
+            try {
+                String [] uriParts = request.getRequestURI().split("/");
+                targetId = Integer.parseInt(uriParts[uriParts.length - 1]);
+            } catch (Exception e) {}
+            int finalTargetId = targetId;
+            movies.removeIf(movie -> movie.getId() == finalTargetId);
             PrintWriter out = response.getWriter();
             out.println("Deleted Movie");
         } catch (IOException e) {
