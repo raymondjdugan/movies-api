@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class MovieServlet extends HttpServlet {
         response.setContentType("application/json");
 
         Movie[] newMovies = new Gson().fromJson(request.getReader(), Movie[].class);
-        for (Movie movie: newMovies){
+        for (Movie movie : newMovies) {
             movie.setId(movieId++);
             movies.add(movie);
         }
@@ -62,7 +63,35 @@ public class MovieServlet extends HttpServlet {
         }
     }
 
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    protected void doPut (HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+        BufferedReader br = request.getReader();
+        Movie editedMovie = new Gson().fromJson(br, Movie.class);
+        try {
+            PrintWriter out = response.getWriter();
+            String [] uriParts = request.getRequestURI().split("/");
+            int targetId = Integer.parseInt(uriParts[uriParts.length - 1]);
+            for(Movie movie : movies) {
+                if (targetId == movie.getId()){
+                    movies.set(movies.indexOf(movie),editedMovie);
+                }
+            }
+            out.println("Movie edited");
+        } catch (IOException ex){
+            ex.printStackTrace();
+        }
+    }
 
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            String[] uriParts = request.getRequestURI().split("/");
+            int targetId = Integer.parseInt(uriParts[uriParts.length - 1]);
+            movies.removeIf(movie -> movie.getId() == targetId);
+            PrintWriter out = response.getWriter();
+            out.println("Deleted Movie");
+        } catch (IOException e) {
+            System.out.println(e);
+        }
     }
 }

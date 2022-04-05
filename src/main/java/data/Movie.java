@@ -33,6 +33,11 @@ public class Movie {
         this.actors = actors;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s - Title, %d - yearMade",title, yearMade);
+    }
+
     public int getId() {
         return id;
     }
