@@ -1,0 +1,3 @@
+[submodule "Movie-Project"]
+	path = Movie-Project
+	url = git@github.com:Emilio-Raymond/Movie-Project.git
