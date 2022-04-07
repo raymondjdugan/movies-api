@@ -5,3 +5,6 @@
 *.class
 target/*
 log\*
+
+Config.java
+keys.js
