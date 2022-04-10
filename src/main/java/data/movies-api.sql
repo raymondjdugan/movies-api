@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS movies
     yearMade     int,
     genre        varchar(255),
     plot         varchar(1024),
-    rating       varchar(2),
+    rating       varchar(10),
     imdb         double,
-    runtime      int,
+    runtime      varchar(255),
     actors       varchar(255)
 );
 
@@ -29,5 +29,8 @@ VALUES  ('Gangs of New York',
          167,
          'Leonardo DiCaprio, Cameron Diaz, Daniel Day-Lewis');
 
+DROP TABLE movies;
+
+DESCRIBE movies;
 
 TRUNCATE movies;

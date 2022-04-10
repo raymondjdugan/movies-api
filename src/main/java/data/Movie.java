@@ -13,14 +13,15 @@ public class Movie implements Serializable {
     private String plot;
     private String rating;
     private double imdb;
-    private int runtime;
+    private String runtime;
     private String actors;
 
     public Movie() {
 
     }
 
-    public Movie(int id, String title, String director, String poster, String dateReleased, int yearMade, String genre, String plot, String rating, double imdb, int runtime, String actors) {
+    public Movie(int id, String title, String director, String poster, String dateReleased, int yearMade, String genre, String plot, String rating,
+                 double imdb, String runtime, String actors) {
         this.id = id;
         this.title = title;
         this.director = director;
@@ -33,11 +34,6 @@ public class Movie implements Serializable {
         this.imdb = imdb;
         this.runtime = runtime;
         this.actors = actors;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("%s - Title, %d - yearMade",title, yearMade);
     }
 
     public int getId() {
@@ -120,11 +116,11 @@ public class Movie implements Serializable {
         this.imdb = imdb;
     }
 
-    public int getRuntime() {
+    public String getRuntime() {
         return runtime;
     }
 
-    public void setRuntime(int runtime) {
+    public void setRuntime(String runtime) {
         this.runtime = runtime;
     }
 

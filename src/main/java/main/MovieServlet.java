@@ -24,13 +24,10 @@ public class MovieServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
             try {
-                outputMessage(response, "application/json", "{message: " + request.getRequestURI() + "}");
                 String[] uriParts = request.getRequestURI().split("/");
                 int targetId = Integer.parseInt(uriParts[uriParts.length - 1]);
-                outputMessage(response, "application/json", "{message: " + targetId + "}");
                 outputMessage(response, "application/json", new Gson().toJson(
-                    moviesDao.findOne(targetId)));
-
+                        moviesDao.findOne(targetId)));
             } catch (NumberFormatException e) {
                 outputMessage(response, "application/json", new Gson().toJson(
                         moviesDao.all()));
@@ -42,14 +39,11 @@ public class MovieServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-
         Movie[] movies = new Movie[0];
         try {
             movies = new Gson().fromJson(request.getReader(), Movie[].class);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (IllegalStateException e) {
-
         }
 
         try {
@@ -60,7 +54,6 @@ public class MovieServlet extends HttpServlet {
             e.printStackTrace();
             return;
         }
-        outputMessage(response, "application/json", "{message: \"Movies POST was successful\"}");
         response.setStatus(200);
     }
 
@@ -83,7 +76,6 @@ public class MovieServlet extends HttpServlet {
             e.printStackTrace();
             return;
         }
-        outputMessage(response, "application/json", "{message: \"Movie UPDATE was successful\"}");
         response.setStatus(200);
     }
 
@@ -103,7 +95,6 @@ public class MovieServlet extends HttpServlet {
             response.setStatus(500);
             e.printStackTrace();
         }
-        outputMessage(response, "application/json", "{message: \"Movie DELETE was successful\"}");
         response.setStatus(200);
     }
 

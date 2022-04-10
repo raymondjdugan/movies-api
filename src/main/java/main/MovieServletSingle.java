@@ -38,7 +38,6 @@ public class MovieServletSingle extends HttpServlet {
             e.printStackTrace();
             return;
         }
-        outputMessage(response, "application/json", "{message: \"Movie POST was successful\"}");
         response.setStatus(200);
     }
 

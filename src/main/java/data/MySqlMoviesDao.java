@@ -45,7 +45,7 @@ public class MySqlMoviesDao implements MoviesDao {
                     resultSet.getString("plot"),
                     resultSet.getString("rating"),
                     resultSet.getDouble("imdb"),
-                    resultSet.getInt("runtime"),
+                    resultSet.getString("runtime"),
                     resultSet.getString("actors")));
         }
         return movies;
@@ -75,7 +75,7 @@ public class MySqlMoviesDao implements MoviesDao {
                 resultSet.getString("plot"),
                 resultSet.getString("rating"),
                 resultSet.getDouble("imdb"),
-                resultSet.getInt("runtime"),
+                resultSet.getString("runtime"),
                 resultSet.getString("actors"));
 
         return movie;
@@ -86,7 +86,7 @@ public class MySqlMoviesDao implements MoviesDao {
         // TODO: Insert one movie
         // TODO: BUILD SQL TEMPLATE
         StringBuilder sql = new StringBuilder("INSERT INTO movies (title, director, poster, dateReleased, yearMade, genre, plot, rating, imdb, " +
-                "runtime, actors)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                "runtime, actors)" + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         //TODO: USE THE SQL STRING TO CREATE A PREPARED STATMENT
 
 
@@ -101,7 +101,7 @@ public class MySqlMoviesDao implements MoviesDao {
         statement.setString(7, movie.getPlot());
         statement.setString(8, movie.getRating());
         statement.setDouble(9, movie.getImdb());
-        statement.setInt(10, movie.getRuntime());
+        statement.setString(10, movie.getRuntime());
         statement.setString(11, movie.getActors());
 
         statement.executeUpdate();
@@ -133,7 +133,7 @@ public class MySqlMoviesDao implements MoviesDao {
             statement.setString((counter * 11) + 7, movie.getPlot());
             statement.setString((counter * 11) + 8, movie.getRating());
             statement.setDouble((counter * 11) + 9, movie.getImdb());
-            statement.setInt((counter * 11) + 10, movie.getRuntime());
+            statement.setString((counter * 11) + 10, movie.getRuntime());
             statement.setString((counter * 11) + 11, movie.getActors());
             counter++;
         }
@@ -159,7 +159,7 @@ public class MySqlMoviesDao implements MoviesDao {
         statement.setString(7, movie.getPlot());
         statement.setString(8, movie.getRating());
         statement.setDouble(9, movie.getImdb());
-        statement.setInt(10, movie.getRuntime());
+        statement.setString(10, movie.getRuntime());
         statement.setString(11, movie.getActors());
         statement.setInt(12, movie.getId());
 
