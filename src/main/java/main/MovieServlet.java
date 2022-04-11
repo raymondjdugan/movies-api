@@ -76,6 +76,7 @@ public class MovieServlet extends HttpServlet {
             e.printStackTrace();
             return;
         }
+        outputMessage(response, "application/json",new Gson().toJson("{message: \"Movies UPDATE was successful\"}"));
         response.setStatus(200);
     }
 

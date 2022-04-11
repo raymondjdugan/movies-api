@@ -144,11 +144,11 @@ public class MySqlMoviesDao implements MoviesDao {
     public void update(Movie movie) throws SQLException {
         //TODO: Update a movie here!
         // TODO: BUILD SQL TEMPLATE
-        StringBuilder sql = new StringBuilder("UPDATE movies SET title = ?, director = ?, poster = ?, dateReleased = ?, yearMade = ?, genre = ?, plot = ?, " +
-                "rating = ?, imdb = ?, runtime = ?, actors = ? WHERE id = ?");
+        String query = ("UPDATE movies SET title = ?, director = ?, poster = ?, dateReleased = ?, yearMade = ?, genre = ?, plot = ?, rating = ?, " +
+                "imdb = ?, runtime = ?, actors = ? WHERE id = ?");
 
         //TODO: USE THE SQL STRING TO CREATE A PREPARED STATMENT
-        PreparedStatement statement = connection.prepareStatement(sql.toString());
+        PreparedStatement statement = connection.prepareStatement(query.toString());
 
         statement.setString(1, movie.getTitle());
         statement.setString(2, movie.getDirector());
@@ -162,6 +162,7 @@ public class MySqlMoviesDao implements MoviesDao {
         statement.setString(10, movie.getRuntime());
         statement.setString(11, movie.getActors());
         statement.setInt(12, movie.getId());
+
 
         statement.executeUpdate();
     }
