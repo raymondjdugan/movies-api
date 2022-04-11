@@ -54,6 +54,7 @@ public class MovieServlet extends HttpServlet {
             e.printStackTrace();
             return;
         }
+        outputMessage(response, "application/json",new Gson().toJson("{message: \"Movies POST was successful\"}"));
         response.setStatus(200);
     }
 
@@ -96,6 +97,7 @@ public class MovieServlet extends HttpServlet {
             response.setStatus(500);
             e.printStackTrace();
         }
+        outputMessage(response, "application/json",new Gson().toJson("{message: \"Movies DELETE was successful\"}"));
         response.setStatus(200);
     }
 

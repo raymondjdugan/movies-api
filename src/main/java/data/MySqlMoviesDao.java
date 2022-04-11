@@ -108,36 +108,9 @@ public class MySqlMoviesDao implements MoviesDao {
     }
 
     public void insertAll(Movie[] movies) throws SQLException {
-        // TODO: Insert all the movies!
-        // TODO: BUILD SQL TEMPLATE
-        StringBuilder sql = new StringBuilder("INSERT INTO movies (title, director, poster, dateReleased, yearMade, genre, plot, rating, imdb," +
-                " runtime, actors)" + "VALUES ");
-
-        //TODO: ADD AN INTERPOLATION TEMPLATE FOR EACH ELEMENT IN MOVIE LIST
-        sql.append("(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), ".repeat(movies.length));
-
-        //TODO: CREATE A NEW STRING AND TAKE OFF LAST COMMA AND WHITESPACE
-        sql = new StringBuilder(sql.substring(0, sql.length() - 2));
-
-        //TODO: USE THE SQL STRING TO CREATE A PREPARED STATMENT
-        PreparedStatement statement = connection.prepareStatement(sql.toString());
-
-        int counter = 0;
         for (Movie movie : movies) {
-            statement.setString((counter * 11) + 1, movie.getTitle());
-            statement.setString((counter * 11) + 2, movie.getDirector());
-            statement.setString((counter * 11) + 3, movie.getPoster());
-            statement.setString((counter * 11) + 4, movie.getDateReleased());
-            statement.setInt((counter * 11) + 5, movie.getYearMade());
-            statement.setString((counter * 11) + 6, movie.getGenre());
-            statement.setString((counter * 11) + 7, movie.getPlot());
-            statement.setString((counter * 11) + 8, movie.getRating());
-            statement.setDouble((counter * 11) + 9, movie.getImdb());
-            statement.setString((counter * 11) + 10, movie.getRuntime());
-            statement.setString((counter * 11) + 11, movie.getActors());
-            counter++;
+            insert(movie);
         }
-        statement.executeUpdate();
     }
 
     @Override
